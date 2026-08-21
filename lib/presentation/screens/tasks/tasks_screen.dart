@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../app/routes.dart';
-import '../../../domain/entities/user.dart';
 import '../../cubits/auth/auth_cubit.dart';
 import '../../cubits/auth/auth_state.dart';
 import '../../cubits/tasks/task_list_cubit.dart';
@@ -127,14 +126,11 @@ class TasksScreen extends StatelessWidget {
           itemCount: state.tasks.length,
           itemBuilder: (context, index) {
             final task = state.tasks[index];
-            final assignee = state.orgMembers.firstWhere(
-              (m) => m.id == task.assigneeId,
-              orElse: () => User(id: task.assigneeId ?? '', name: 'Unassigned', email: ''),
-            );
+            final assignee = state.orgMembers.where((m) => m.id == task.assigneeId).firstOrNull;
 
             return TaskCard(
               task: task,
-              assignee: task.assigneeId != null ? assignee : null,
+              assignee: assignee,
               onTap: () => Navigator.pushNamed(context, AppRoutes.taskDetail, arguments: task.id),
               onStatusChanged: (newStatus) {
                 context.read<TaskListCubit>().updateTaskStatus(task.id, newStatus);

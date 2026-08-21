@@ -260,11 +260,8 @@ class _TaskDetailContentState extends State<_TaskDetailContent> {
         Text('Comments (${widget.state.comments.length})', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
         const SizedBox(height: 12),
         ...widget.state.comments.map((c) {
-          final author = widget.state.orgMembers.firstWhere(
-            (m) => m.id == c.authorId,
-            orElse: () => User(id: c.authorId, name: 'Team Member', email: ''),
-          );
-          return CommentTile(comment: c, authorName: author.name);
+          final author = widget.state.orgMembers.where((m) => m.id == c.authorId).firstOrNull;
+          return CommentTile(comment: c, authorName: author?.name ?? 'Team Member');
         }),
         const SizedBox(height: 12),
         Row(

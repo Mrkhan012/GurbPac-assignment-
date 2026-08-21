@@ -26,10 +26,7 @@ class TaskDetailCubit extends Cubit<TaskDetailState> {
 
       User? assignee;
       if (task.assigneeId != null) {
-        assignee = members.firstWhere(
-          (m) => m.id == task.assigneeId,
-          orElse: () => User(id: task.assigneeId!, name: 'Unknown User', email: ''),
-        );
+        assignee = members.where((m) => m.id == task.assigneeId).firstOrNull;
       }
 
       emit(TaskDetailSuccess(
@@ -85,10 +82,7 @@ class TaskDetailCubit extends Cubit<TaskDetailState> {
 
       User? newAssignee;
       if (userId != null) {
-        newAssignee = s.orgMembers.firstWhere(
-          (m) => m.id == userId,
-          orElse: () => User(id: userId, name: 'Assigned User', email: ''),
-        );
+        newAssignee = s.orgMembers.where((m) => m.id == userId).firstOrNull;
       }
 
       emit(s.copyWith(
