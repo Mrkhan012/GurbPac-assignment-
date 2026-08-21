@@ -26,11 +26,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _fillCredentials(String email, String password) {
-    _emailController.text = email;
-    _passwordController.text = password;
-  }
-
   void _submit() {
     if (_formKey.currentState?.validate() ?? false) {
       context.read<AuthCubit>().login(
@@ -120,36 +115,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      const Divider(),
-                      const SizedBox(height: 12),
-                      const Text(
-                        'Quick Test Credentials:',
-                        style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight),
-                      ),
-                      const SizedBox(height: 8),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: [
-                          ActionChip(
-                            label: const Text('Org A Admin (Ava)', style: TextStyle(fontSize: 11)),
-                            onPressed: () => _fillCredentials('ava.admin@nimbusdigital.test', 'Password123!'),
-                          ),
-                          ActionChip(
-                            label: const Text('Org A Member (Marcus)', style: TextStyle(fontSize: 11)),
-                            onPressed: () => _fillCredentials('marcus.member@nimbusdigital.test', 'Password123!'),
-                          ),
-                          ActionChip(
-                            label: const Text('Org B Admin (Daniel)', style: TextStyle(fontSize: 11)),
-                            onPressed: () => _fillCredentials('daniel.admin@harborlightstudios.test', 'Password123!'),
-                          ),
-                          ActionChip(
-                            label: const Text('Org B Member (Elena)', style: TextStyle(fontSize: 11)),
-                            onPressed: () => _fillCredentials('elena.member@harborlightstudios.test', 'Password123!'),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
                       Center(
                         child: TextButton(
                           onPressed: () => Navigator.pushNamed(context, AppRoutes.register),

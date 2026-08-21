@@ -37,7 +37,7 @@ void main() {
     expect(find.text('Password is required'), findsOneWidget);
   });
 
-  testWidgets('Quick test credential chip fills email and password fields', (tester) async {
+  testWidgets('LoginScreen accepts typed email and password', (tester) async {
     final fakeStorage = FakeStorageService();
     final simManager = SimulationManager()..delayMilliseconds = 0;
     final dataSource = MockDataSourceImpl(simulationManager: simManager, storageService: fakeStorage);
@@ -54,9 +54,11 @@ void main() {
       ),
     );
 
-    await tester.tap(find.text('Org A Admin (Ava)'));
+    await tester.enterText(find.byType(TextFormField).first, 'ava.admin@nimbusdigital.test');
+    await tester.enterText(find.byType(TextFormField).last, 'Password123!');
     await tester.pumpAndSettle();
 
     expect(find.text('ava.admin@nimbusdigital.test'), findsOneWidget);
+    expect(find.text('Password123!'), findsOneWidget);
   });
 }
